@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-test
+  labels:
+    app: app-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-test
+  template:
+    metadata:
+      labels:
+        app: app-test
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/worker: "true" 
+      containers:
+      - name: app-test
+        image: wajdimansour/app-test:latest
+        ports:
+        - containerPort: 8080
+        securityContext:
+          privileged: true
